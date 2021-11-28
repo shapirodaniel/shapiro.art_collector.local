@@ -53,7 +53,7 @@ const Searchable = (props) => {
           }
         }}
       >
-        {searchTerm}
+        {searchValue}
       </a>
     </span>
   );
@@ -94,9 +94,22 @@ const Searchable = (props) => {
  * This component should be exported as default.
  */
 const Feature = (props) => {
-  const { featuredResult } = props;
+  const { featuredResult, setIsLoading, setSearchResults } = props;
 
-  const { title, dated } = featuredResult || {};
+  const {
+    title,
+    dated,
+    culture,
+    technique,
+    medium,
+    people,
+    dimensions,
+    department,
+    division,
+    contact,
+    creditline,
+    images,
+  } = featuredResult || {};
 
   return (
     <main id="feature">
@@ -107,13 +120,75 @@ const Feature = (props) => {
             <h4>{dated}</h4>
           </header>
           <section className="facts">
-            <span className="title">FACT NAME</span>
-            <span className="content">FACT VALUE</span>
-            <span className="title">NEXT FACT NAME</span>
-            <span className="content">NEXT FACT VALUE</span>
+            <span className="title">Culture</span>
+            <span className="content">
+              <Searchable
+                searchTerm={"culture"}
+                searchValue={culture}
+                setIsLoading={setIsLoading}
+                setSearchResults={setSearchResults}
+              />
+            </span>
+            {technique && (
+              <>
+                <span className="title">Technique</span>
+                <span className="content">
+                  <Searchable
+                    searchTerm={"technique"}
+                    searchValue={technique}
+                    setIsLoading={setIsLoading}
+                    setSearchResults={setSearchResults}
+                  />
+                </span>
+              </>
+            )}
+            <span className="title">Medium</span>
+            <span className="content">
+              <Searchable
+                searchTerm={"medium"}
+                searchValue={medium}
+                setIsLoading={setIsLoading}
+                setSearchResults={setSearchResults}
+              />
+            </span>
+            <span className="title">Dimensions</span>
+            <span className="content">{dimensions}</span>
+
+            {people &&
+              people.map((person) => (
+                <>
+                  <span className="title">Person</span>
+                  <span className="content">
+                    <Searchable
+                      searchTerm={"person"}
+                      searchValue={person.displayname}
+                      setIsLoading={setIsLoading}
+                      setSearchResults={setSearchResults}
+                    />
+                  </span>
+                </>
+              ))}
+
+            <span className="title">Department</span>
+            <span className="content">{department}</span>
+            <span className="title">Division</span>
+            <span className="content">{division}</span>
+            <span className="title">Contact</span>
+
+            <a className="content" href={`mailto:${contact}`}>
+              <span className="content">{contact}</span>
+            </a>
+
+            <span className="title">Credit</span>
+            <span className="content">{creditline}</span>
           </section>
           <section className="photos">
-            <img src={"IMAGE_URL"} alt={"SOMETHING_WORTHWHILE"} />
+            {images.map(
+              ({ idsid, baseimageurl, alttext }) =>
+                baseimageurl && (
+                  <img key={idsid} src={baseimageurl} alt={alttext} />
+                )
+            )}
           </section>
         </div>
       )}
