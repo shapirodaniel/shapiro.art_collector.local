@@ -71,7 +71,7 @@ const Search = (props) => {
         setIsLoading(true);
 
         try {
-          const searchResults = fetchQueryResults({
+          const searchResults = await fetchQueryResults({
             century,
             classification,
             queryString,

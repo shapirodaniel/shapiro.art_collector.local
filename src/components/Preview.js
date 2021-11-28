@@ -16,6 +16,7 @@ const Preview = (props) => {
   const { searchResults, setSearchResults, setFeaturedResult, setIsLoading } =
     props;
   const { info, records } = searchResults;
+  const { prev, next } = info || {};
 
   /**
    * Don't touch this function, it's good to go.
@@ -40,7 +41,7 @@ const Preview = (props) => {
       <header className="pagination">
         {/* This button should be disabled if nothing is set in info.prev, and should call fetchPage with info.prev when clicked */}
         <button
-          disabled={!info.prev ? true : false}
+          disabled={!prev ? true : false}
           className="previous"
           onClick={() => fetchPage(info.prev)}
         >
@@ -48,7 +49,7 @@ const Preview = (props) => {
         </button>
         {/* This button should be disabled if nothing is set in info.next, and should call fetchPage with info.next when clicked */}
         <button
-          disabled={!info.next ? true : false}
+          disabled={!next ? true : false}
           className="next"
           onClick={() => fetchPage(info.next)}
         >
@@ -73,29 +74,33 @@ const Preview = (props) => {
             }
           </div>
         */
-          records.map((record, index) => (
-            <div
-              key={index}
-              className="object-preview"
-              onClick={(event) => {
-                // prevent the default
-                // set the featured result to be this record, using setFeaturedResult
-                event.preventDefault();
-                setFeaturedResult(record);
-              }}
-            >
-              {
-                // if the record.primaryimageurl exists, show this: <img src={ record.primaryimageurl } alt={ record.description } />, otherwise show nothing
-                record.primaryimageurl && (
-                  <img src={record.primaryimageurl} alt={record.description} />
-                )
-              }
-              {
-                // if the record.title exists, add this: <h3>{ record.title }</h3>, otherwise show this: <h3>MISSING INFO</h3>
-                <h3>{record.title || "MISSING INFO"}</h3>
-              }
-            </div>
-          ))
+          records &&
+            records.map((record, index) => (
+              <div
+                key={index}
+                className="object-preview"
+                onClick={(event) => {
+                  // prevent the default
+                  // set the featured result to be this record, using setFeaturedResult
+                  event.preventDefault();
+                  setFeaturedResult(record);
+                }}
+              >
+                {
+                  // if the record.primaryimageurl exists, show this: <img src={ record.primaryimageurl } alt={ record.description } />, otherwise show nothing
+                  record.primaryimageurl && (
+                    <img
+                      src={record.primaryimageurl}
+                      alt={record.description}
+                    />
+                  )
+                }
+                {
+                  // if the record.title exists, add this: <h3>{ record.title }</h3>, otherwise show this: <h3>MISSING INFO</h3>
+                  <h3>{record.title || "MISSING INFO"}</h3>
+                }
+              </div>
+            ))
         }
       </section>
     </aside>

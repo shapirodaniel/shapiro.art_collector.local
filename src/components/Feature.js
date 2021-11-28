@@ -96,15 +96,15 @@ const Searchable = (props) => {
 const Feature = (props) => {
   const { featuredResult } = props;
 
-  console.log(featuredResult);
+  const { title, dated } = featuredResult || {};
 
   return (
     <main id="feature">
       {featuredResult && (
         <div className="object-feature">
           <header>
-            <h3>OBJECT TITLE</h3>
-            <h4>WHEN IT IS DATED</h4>
+            <h3>{title}</h3>
+            <h4>{dated}</h4>
           </header>
           <section className="facts">
             <span className="title">FACT NAME</span>
