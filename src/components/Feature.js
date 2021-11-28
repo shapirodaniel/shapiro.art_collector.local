@@ -93,6 +93,32 @@ const Searchable = (props) => {
  *
  * This component should be exported as default.
  */
-const Feature = (props) => {};
+const Feature = (props) => {
+  const { featuredResult } = props;
+
+  console.log(featuredResult);
+
+  return (
+    <main id="feature">
+      {featuredResult && (
+        <div className="object-feature">
+          <header>
+            <h3>OBJECT TITLE</h3>
+            <h4>WHEN IT IS DATED</h4>
+          </header>
+          <section className="facts">
+            <span className="title">FACT NAME</span>
+            <span className="content">FACT VALUE</span>
+            <span className="title">NEXT FACT NAME</span>
+            <span className="content">NEXT FACT VALUE</span>
+          </section>
+          <section className="photos">
+            <img src={"IMAGE_URL"} alt={"SOMETHING_WORTHWHILE"} />
+          </section>
+        </div>
+      )}
+    </main>
+  );
+};
 
 export default Feature;

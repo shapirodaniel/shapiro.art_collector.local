@@ -37,12 +37,13 @@ const Search = (props) => {
    * Make sure to console.error on caught errors from the API methods.
    */
   useEffect(() => {
-    Promise.all(fetchAllCenturies()).then((centuries) =>
-      setCenturyList(centuries)
-    );
-    Promise.all(fetchAllClassifications()).then((classifications) =>
-      setClassificationList(classifications)
-    );
+    const getCenturiesAndClassifications = async () => {
+      const centuries = await fetchAllCenturies();
+      const classifications = await fetchAllClassifications();
+      setCenturyList(centuries);
+      setClassificationList(classifications);
+    };
+    getCenturiesAndClassifications();
   }, []);
 
   /**
@@ -90,7 +91,7 @@ const Search = (props) => {
           type="text"
           placeholder="enter keywords..."
           value={queryString}
-          onChange={() => setQueryString(e.target.value)}
+          onChange={(e) => setQueryString(e.target.value)}
         />
       </fieldset>
       <fieldset>
@@ -104,11 +105,11 @@ const Search = (props) => {
           name="classification"
           id="select-classification"
           value={classification}
-          onChange={() => setClassification(e.target.value)}
+          onChange={(e) => setClassification(e.target.value)}
         >
           <option value="any">Any</option>
-          {classificationList.map((c, idx) => (
-            <option key={idx}>{c}</option>
+          {classificationList.map((c) => (
+            <option key={c.id}>{c.name}</option>
           ))}
         </select>
       </fieldset>
@@ -120,11 +121,11 @@ const Search = (props) => {
           name="century"
           id="select-century"
           value={century}
-          onChange={() => setCentury(e.target.value)}
+          onChange={(e) => setCentury(e.target.value)}
         >
           <option value="any">Any</option>
-          {centuryList.map((c, idx) => (
-            <option key={idx}>{c}</option>
+          {centuryList.map((c) => (
+            <option key={c.id}>{c.name}</option>
           ))}
         </select>
       </fieldset>
