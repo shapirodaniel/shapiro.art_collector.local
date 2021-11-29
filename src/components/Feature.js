@@ -111,6 +111,10 @@ const Feature = (props) => {
     images,
   } = featuredResult || {};
 
+  const person = (people && people[0]) || {};
+
+  console.log(featuredResult);
+
   return (
     <main id="feature">
       {featuredResult && (
@@ -154,20 +158,15 @@ const Feature = (props) => {
             <span className="title">Dimensions</span>
             <span className="content">{dimensions}</span>
 
-            {people &&
-              people.map((person) => (
-                <>
-                  <span className="title">Person</span>
-                  <span className="content">
-                    <Searchable
-                      searchTerm={"person"}
-                      searchValue={person.displayname}
-                      setIsLoading={setIsLoading}
-                      setSearchResults={setSearchResults}
-                    />
-                  </span>
-                </>
-              ))}
+            <span className="title">Person</span>
+            <span className="content">
+              <Searchable
+                searchTerm={"person"}
+                searchValue={person.displayname}
+                setIsLoading={setIsLoading}
+                setSearchResults={setSearchResults}
+              />
+            </span>
 
             <span className="title">Department</span>
             <span className="content">{department}</span>
